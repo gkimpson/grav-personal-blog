@@ -353,13 +353,13 @@ Visit `http://localhost:8080` to see your beautifully styled blog homepage with 
 
 ## Key Takeaways
 
-✅ **Framework-X is minimal but powerful** — start with simple routes, add structure when needed
+**Framework-X is minimal but powerful** — start with simple routes, add structure when needed
 
-✅ **Twig separation** — keep your templates in separate files for cleaner code
+**Twig separation** — keep your templates in separate files for cleaner code
 
-✅ **Async ready** — the built-in server handles concurrent requests efficiently
+**Async ready** — the built-in server handles concurrent requests efficiently
 
-✅ **Easy to extend** — add services, middleware, or async database queries as your app grows
+**Easy to extend** — add services, middleware, or async database queries as your app grows
 
 ## Next Steps
 
@@ -378,4 +378,4 @@ Now that you have the basics down, explore:
 - [ReactPHP Documentation](https://reactphp.org/)
 - [PHP Async with Fibers](https://www.php.net/manual/en/class.fiber.php)
 
-Framework-X makes building modern PHP applications fast, simple, and fun. Start with the basics we've covered here, and scale up as your needs grow. Happy coding! 🚀
+Framework-X makes building modern PHP applications fast, simple, and fun. Start with the basics we've covered here, and scale up as your needs grow. Happy coding.
