@@ -14,7 +14,13 @@ Framework-X is a modern, async-first PHP web framework built on ReactPHP. What I
 
 ## What is Framework-X?
 
-Framework-X is a micro-framework. Unlike Laravel or Symfony, which come packed with batteries, Framework-X stays lean. It gives you routing, a container, and middleware support, but then gets out of the way. You decide what else you need. This approach works well if you're building APIs, microservices, or just want to keep your project lightweight.
+Framework-X is a micro-framework built on ReactPHP. Unlike Laravel or Symfony, which come packed with batteries, Framework-X stays lean. It gives you routing, a container, and middleware support, but then gets out of the way. You decide what else you need.
+
+What sets Framework-X apart is its architecture. Traditional PHP frameworks like Laravel run on PHP-FPM, which follows a "boot and die" model. Each request spins up a new PHP process, runs your code, and shuts down. This works, but it's wasteful for high-concurrency scenarios.
+
+Framework-X runs on a persistent event-loop. The process starts once and stays alive, handling many concurrent requests without booting up for each one. This is a fundamentally different execution model. You get better performance, lower latency, and the ability to maintain state across requests if you need to.
+
+This approach works well if you're building APIs, microservices, or applications that need to handle many concurrent connections efficiently.
 
 Framework-X is a PHP web framework that:
 
@@ -301,6 +307,14 @@ php public/index.php
 ```
 
 Visit `http://localhost:8080` to see your beautifully styled blog homepage with Twig-rendered templates!
+
+## Understanding the event-loop model
+
+Since Framework-X keeps the process alive between requests, you need to be aware of a few things. Variables in your application live for the lifetime of the process, not just a single request. This means you can cache data, maintain database connections, or keep state if you're careful about it.
+
+The downside is you can't just dump all your session state in a global variable and expect it to work like traditional PHP. You need to think about request isolation and cleanup. Reading the official docs helps here.
+
+Also, never use blocking I/O calls (like `file_get_contents()` on a remote URL or synchronous database queries) in hot request paths. They'll block the entire event-loop and freeze all concurrent requests. This is where async methods like `await()` come in. But don't worry if this sounds complicated now, it becomes natural quickly.
 
 ## A note on best practices
 
