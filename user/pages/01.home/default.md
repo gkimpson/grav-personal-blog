@@ -10,4 +10,10 @@ I build web applications with PHP, JavaScript, and modern frameworks. Arsenal su
 
 ## Latest posts
 
-Check out the [blog](/blog) for technical articles on web development and software engineering.
+{% set posts = page.find('/blog').children.order('date', 'desc').limit(5) %}
+
+{% for post in posts %}
+* [{{ post.title }}]({{ post.url }}) — {{ post.date|date('F j, Y') }}
+{% endfor %}
+
+[View all posts →](/blog)
