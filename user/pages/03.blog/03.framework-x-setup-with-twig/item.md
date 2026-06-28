@@ -10,16 +10,18 @@ tags:
   - tutorial
 ---
 
-Framework-X is a modern, async-first PHP web framework built on ReactPHP that makes building fast, concurrent web applications incredibly straightforward. In this guide, we'll set up a new Framework-X project and integrate the Twig template engine to render beautiful HTML pages.
+Framework-X is a modern, async-first PHP web framework built on ReactPHP. What I love about it is that it doesn't force you into a rigid structure. You can start with a simple script and grow it as your needs evolve. In this guide, we'll build a very simple application and integrate the Twig template engine to render HTML pages. Don't worry if you're new to async PHP. We'll keep things straightforward.
 
 ## What is Framework-X?
 
+Framework-X is a micro-framework. Unlike Laravel or Symfony, which come packed with batteries, Framework-X stays lean. It gives you routing, a container, and middleware support, but then gets out of the way. You decide what else you need. This approach works well if you're building APIs, microservices, or just want to keep your project lightweight.
+
 Framework-X is a PHP web framework that:
 
-- **Runs asynchronously** — handles many concurrent connections efficiently
-- **Starts simple** — begin with closure routes, add structure only when needed
-- **Keeps hard things possible** — supports async/await patterns, fibers, and promises
-- **Works anywhere** — runs with the built-in server, PHP-FPM, Docker, or behind a reverse proxy
+- **Runs asynchronously.** Handles many concurrent connections efficiently.
+- **Starts simple.** Begin with closure routes, add structure only when needed.
+- **Keeps hard things possible.** Supports async/await patterns, fibers, and promises.
+- **Works anywhere.** Runs with the built-in server, PHP-FPM, Docker, or behind a reverse proxy.
 
 It's perfect for building REST APIs, web applications, real-time services, and traditional web apps.
 
@@ -349,25 +351,29 @@ php public/index.php
 
 Visit `http://localhost:8080` to see your beautifully styled blog homepage with Twig-rendered templates!
 
+## A note on best practices
+
+This is a very simple application to get you started. As you build more complex features, take time to read the official Framework-X documentation, especially the [best practices guide](https://framework-x.org/docs/best-practices/controllers/). It covers controller architecture, middleware patterns, async handling, and more. The team behind Framework-X knows what they're doing, and their docs are genuinely helpful.
+
 ## Key Takeaways
 
-**Framework-X is minimal but powerful** — start with simple routes, add structure when needed
+**Framework-X is minimal but powerful.** Start with simple routes, add structure when needed.
 
-**Twig separation** — keep your templates in separate files for cleaner code
+**Twig separation.** Keep your templates in separate files for cleaner code.
 
-**Async ready** — the built-in server handles concurrent requests efficiently
+**Async ready.** The built-in server handles concurrent requests efficiently.
 
-**Easy to extend** — add services, middleware, or async database queries as your app grows
+**Easy to extend.** Add services, middleware, or async database queries as your app grows.
 
 ## Next Steps
 
 Now that you have the basics down, explore:
 
-- **Database integration** — use `react/mysql` for async queries
-- **Middleware** — add authentication, logging, or CORS handling
-- **Asset pipeline** — minify and bundle CSS/JS
-- **Deployment** — run behind Nginx or Docker
-- **Testing** — write PHPUnit tests for your controllers
+- **Database integration.** Use `react/mysql` for async queries.
+- **Middleware.** Add authentication, logging, or CORS handling.
+- **Asset pipeline.** Minify and bundle CSS/JS.
+- **Deployment.** Run behind Nginx or Docker.
+- **Testing.** Write PHPUnit tests for your controllers.
 
 ## Resources
 
@@ -376,4 +382,4 @@ Now that you have the basics down, explore:
 - [ReactPHP Documentation](https://reactphp.org/)
 - [PHP Async with Fibers](https://www.php.net/manual/en/class.fiber.php)
 
-Framework-X makes building modern PHP applications fast, simple, and fun. Start with the basics we've covered here, and scale up as your needs grow. Happy coding.
+I genuinely enjoy building with Framework-X. It respects your intelligence as a developer and gets out of the way when you need it to. Start with what we've covered here, and you'll find your own path as things get more complex. Let me know if you hit any snags with this setup.
