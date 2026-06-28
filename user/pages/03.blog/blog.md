@@ -1,5 +1,6 @@
 ---
 title: Blog
+show_sidebar: false
 content:
   items: '@self.children'
   order:
