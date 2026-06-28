@@ -10,8 +10,6 @@ tags:
   - tutorial
 ---
 
-# Getting Started with Framework-X and Twig Templates
-
 Framework-X is a modern, async-first PHP web framework built on ReactPHP that makes building fast, concurrent web applications incredibly straightforward. In this guide, we'll set up a new Framework-X project and integrate the Twig template engine to render beautiful HTML pages.
 
 ## What is Framework-X?
