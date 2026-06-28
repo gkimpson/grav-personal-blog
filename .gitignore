@@ -1,0 +1,67 @@
+# Composer
+.composer
+vendor/*
+!*/vendor/*
+
+# Sass
+.sass-cache
+
+# Grav Specific
+backup/*
+!backup/.*
+cache/*
+!cache/.*
+assets/*
+!assets/.*
+logs/*
+!logs/.*
+images/*
+!images/.*
+user/accounts/*
+!user/accounts/.*
+user/data/*
+!user/data/.*
+user/plugins/*
+!user/plugins/.*
+user/themes/*
+!user/themes/.*
+# security.yaml holds only policy now (twig_content, twig_sandbox, xss rules) —
+# the per-site secret moved to security-private.php in 2.0.0-beta.2
+# (GHSA-3f29-pqwf-v4j4), so the policy file is safe (and useful) to commit.
+# The *-private.php glob also covers per-plugin secret files written into
+# user/config (e.g. api-private.php from the API plugin's JWT secret).
+user/**/config/*-private.php
+user/**/config/*-private.php.tmp
+
+# Environments
+.env
+.env.local
+.env.*.local
+.gravenv
+
+# OS Generated
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+*.swp
+
+# phpstorm
+.idea/*
+
+# testing stuff
+tests/_output/*
+tests/_support/_generated/*
+tests/cache/*
+tests/error.log
+system/templates/testing/*
+/user/config/versions.yaml
+/user/data/recovery.window
+tmp/*
+/AGENTS.md
+/.claude
+
+# PHPDoc tools
+tools/phpdoc/vendor/
+tools/phpdoc/output/
+/.phpactor.json

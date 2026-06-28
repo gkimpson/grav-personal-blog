@@ -1,0 +1,68 @@
+name: PHP Tests
+
+on:
+  push:
+    branches: [ develop, 1.8 ]
+  pull_request:
+    branches: [ develop, 1.8 ]
+
+permissions:
+  contents: read # to fetch code (actions/checkout)
+
+jobs:
+  unit-tests:
+    strategy:
+      matrix:
+        php: [8.5, 8.4, 8.3]
+        os: [ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP ${{ matrix.php }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: opcache, gd
+          tools: composer:v2
+          coverage: none
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
+      - name: Run test suite
+        run: php -d register_argc_argv=On vendor/bin/codecept run
+
+#  slack:
+#      name: Slack
+#      needs: unit-tests
+#      runs-on: ubuntu-latest
+#      if: always()
+#      steps:
+#        - uses: technote-space/workflow-conclusion-action@v2
+#        - uses: 8398a7/action-slack@v3
+#          with:
+#             status: failure
+#             fields: repo,message,author,action
+#             icon_emoji: ':octocat:'
+#             author_name: 'Github Action Tests'
+#             text: '💥 Automated Test Failure'
+#          env:
+#            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+#          if: env.WORKFLOW_CONCLUSION == 'failure'
