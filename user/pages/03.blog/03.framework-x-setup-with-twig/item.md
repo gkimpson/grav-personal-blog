@@ -172,53 +172,18 @@ Create the `templates/` directory and add a layout template `templates/layout.ht
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Framework-X Blog{% endblock %}</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background: #f5f5f5;
-        }
-        header {
-            background: #333;
-            color: white;
-            padding: 20px;
-            border-radius: 5px;
-            margin-bottom: 30px;
-        }
-        h1 {
-            margin: 0;
-        }
-        .post {
-            background: white;
-            padding: 20px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .post h2 {
-            margin-top: 0;
-        }
-        .meta {
-            color: #666;
-            font-size: 0.9em;
-        }
-    </style>
 </head>
 <body>
     <header>
-        <h1>GAVK Developer Blog</h1>
-        <p>Exploring web development with Framework-X and modern PHP</p>
+        <h1>Gavin Kimpson : Blog</h1>
     </header>
 
     <main>
         {% block content %}{% endblock %}
     </main>
 
-    <footer style="text-align: center; color: #666; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd;">
-        <p>&copy; 2026 GAVK Blog. Built with Framework-X and Twig.</p>
+    <footer>
+        <p>&copy; 2026 Built with Framework-X and Twig.</p>
     </footer>
 </body>
 </html>
@@ -229,27 +194,18 @@ Create `templates/home.html.twig`:
 ```twig
 {% extends "layout.html.twig" %}
 
-{% block title %}Home - GAVK Developer Blog{% endblock %}
+{% block title %}Blog{% endblock %}
 
 {% block content %}
-    <div class="posts">
-        {% for post in posts %}
-            <article class="post">
-                <h2>
-                    <a href="/posts/{{ post.id }}" style="text-decoration: none; color: #333;">
-                        {{ post.title }}
-                    </a>
-                </h2>
-                <div class="meta">
-                    Posted on {{ post.date|date('F j, Y') }}
-                </div>
-                <p>{{ post.excerpt }}</p>
-                <a href="/posts/{{ post.id }}">Read more →</a>
-            </article>
-        {% else %}
-            <p>No posts yet. Check back soon!</p>
-        {% endfor %}
-    </div>
+    {% for post in posts %}
+        <article>
+            <h2><a href="/posts/{{ post.id }}">{{ post.title }}</a></h2>
+            <p>{{ post.date|date('F j, Y') }}</p>
+            <p>{{ post.excerpt }}</p>
+        </article>
+    {% else %}
+        <p>No posts yet. Check back soon.</p>
+    {% endfor %}
 {% endblock %}
 ```
 
@@ -327,18 +283,13 @@ Create `templates/post.html.twig`:
 ```twig
 {% extends "layout.html.twig" %}
 
-{% block title %}{{ title }} - GAVK Developer Blog{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-    <article class="post">
-        <h1>{{ title }}</h1>
-        <div class="meta">
-            <a href="/">← Back to home</a>
-        </div>
-        
-        <div style="margin-top: 20px; line-height: 1.8;">
-            {{ content }}
-        </div>
+    <article>
+        <h2>{{ title }}</h2>
+        <p><a href="/">Back</a></p>
+        {{ content }}
     </article>
 {% endblock %}
 ```
