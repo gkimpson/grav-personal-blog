@@ -1,5 +1,7 @@
 ---
 title: Getting Started with Framework-X and Twig Templates
+description: Learn how to build a simple Framework-X application with Twig templating. A micro-framework guide for async PHP development with event-loop architecture.
+keywords: framework-x, php, reactphp, twig, async, micro-framework, tutorial
 date: '2026-06-28'
 tags:
   - framework-x
@@ -8,6 +10,11 @@ tags:
   - twig
   - async
   - tutorial
+og:
+  title: Getting Started with Framework-X and Twig Templates
+  description: Build an async PHP application with Framework-X and Twig templating. Learn event-loop architecture vs PHP-FPM.
+  image: /images/framework-x.jpg
+canonical: https://gavk.dev/blog/framework-x-setup-with-twig
 ---
 
 Framework-X is a modern, async-first PHP web framework built on ReactPHP. What I love about it is that it doesn't force you into a rigid structure. You can start with a simple script and grow it as your needs evolve. In this guide, we'll build a very simple application and integrate the Twig template engine to render HTML pages. Don't worry if you're new to async PHP. We'll keep things straightforward.
