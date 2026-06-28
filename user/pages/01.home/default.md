@@ -10,10 +10,6 @@ I build web applications with PHP, JavaScript, and modern frameworks. Arsenal su
 
 ## Latest posts
 
-{% set posts = page.find('/blog').children.order('date', 'desc').limit(5) %}
-
-{% for post in posts %}
-* [{{ post.title }}]({{ post.url }}) — {{ post.date|date('F j, Y') }}
-{% endfor %}
+* [Getting Started with Framework-X and Twig Templates](/blog/framework-x-setup-with-twig) — June 28, 2026
 
 [View all posts →](/blog)
