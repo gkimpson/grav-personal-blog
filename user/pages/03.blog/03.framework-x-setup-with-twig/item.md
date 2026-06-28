@@ -143,35 +143,37 @@ Install Twig via Composer:
 composer require twig/twig
 ```
 
-Create a Twig helper service. Create `src/TemplateEngine.php`:
+Twig is Framework-X's recommended template engine. Create the Twig Environment and pass it to your app via the dependency injection container:
 
-```php
+```php title="public/index.php"
 <?php
 
-namespace App;
+require __DIR__ . '/../vendor/autoload.php';
 
+use FrameworkX\App;
+use FrameworkX\Container;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-class TemplateEngine
-{
-    private Environment $twig;
+$loader = new FilesystemLoader(__DIR__ . '/../templates');
+$twig = new Environment($loader, [
+    'cache' => false, // Disable cache in development
+]);
 
-    public function __construct(string $templatePath)
-    {
-        $loader = new FilesystemLoader($templatePath);
-        
-        $this->twig = new Environment($loader, [
-            'cache' => false, // Disable cache in development
-            'debug' => true,
-        ]);
-    }
+$app = new App(new Container([
+    Environment::class => $twig,
+]));
 
-    public function render(string $template, array $data = []): string
-    {
-        return $this->twig->render($template, $data);
-    }
-}
+$app->get('/', Acme\Todo\HomeController::class);
+$app->run();
+```
+
+For production, enable caching so templates compile once and persist in memory:
+
+```php
+$twig = new Environment($loader, [
+    'cache' => __DIR__ . '/../cache/twig',
+]);
 ```
 
 ## Step 4: Set Up Templates
@@ -222,98 +224,74 @@ Create `templates/home.html.twig`:
 {% endblock %}
 ```
 
-## Step 5: Update Your Application
+## Step 5: Create a Controller
 
-Now update `public/index.php` to use Twig:
+Create `src/Acme/Todo/HomeController.php`:
 
 ```php
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
+namespace Acme\Todo;
 
-use FrameworkX\App;
-use App\TemplateEngine;
+use Twig\Environment;
+use Psr\Http\Message\ServerRequestInterface;
 use React\Http\Message\Response;
 
-// Initialize Twig
-$templates = new TemplateEngine(__DIR__ . '/../templates');
+class HomeController
+{
+    public function __construct(private Environment $twig)
+    {
+    }
 
-// Sample data (replace with database queries later)
-$posts = [
-    [
-        'id' => 1,
-        'title' => 'Building Async APIs with Framework-X',
-        'excerpt' => 'Learn how to build high-performance APIs using ReactPHP and async/await patterns.',
-        'date' => new DateTime('2026-06-28'),
-    ],
-    [
-        'id' => 2,
-        'title' => 'Introduction to Twig Templating',
-        'excerpt' => 'A beginner-friendly guide to using Twig for rendering beautiful HTML.',
-        'date' => new DateTime('2026-06-27'),
-    ],
-];
+    public function __invoke(ServerRequestInterface $request): Response
+    {
+        $html = $this->twig->render('home.html.twig', [
+            'title' => 'Welcome to Framework X',
+        ]);
 
-$app = new App();
-
-// Home page route
-$app->get('/', function () use ($templates, $posts) {
-    $html = $templates->render('home.html.twig', [
-        'posts' => $posts,
-    ]);
-
-    return new Response(
-        200,
-        ['Content-Type' => 'text/html; charset=utf-8'],
-        $html
-    );
-});
-
-// Single post route (placeholder)
-$app->get('/posts/{id}', function ($request) use ($templates) {
-    $id = $request->getAttribute('id');
-    
-    $html = $templates->render('post.html.twig', [
-        'id' => $id,
-        'title' => 'Post #' . $id,
-        'content' => 'This is where the full post content would go.',
-    ]);
-
-    return new Response(
-        200,
-        ['Content-Type' => 'text/html; charset=utf-8'],
-        $html
-    );
-});
-
-$app->run();
+        return Response::html($html);
+    }
+}
 ```
 
-## Step 6: Create a Post Template
+The Twig Environment is passed via dependency injection from the container. Render your template with data and return Response::html() to send HTML to the client.
 
-Create `templates/post.html.twig`:
+## Step 6: Other Template Engines
 
-```twig
-{% extends "layout.html.twig" %}
+Twig is the recommended option, but Framework-X works with any PHP template engine:
 
-{% block title %}{{ title }}{% endblock %}
+- **Plates** - Simple, markup-based templates without a new language
+- **Latte** - Nette's template engine with clean syntax
+- **Mustache** - Logic-less templates
+- **Handlebars** - Logic-less templates with familiar syntax
 
-{% block content %}
-    <article>
-        <h2>{{ title }}</h2>
-        <p><a href="/">Back</a></p>
-        {{ content }}
-    </article>
-{% endblock %}
+Choose based on your preference and project needs.
+
+## Step 7: Important Considerations
+
+Don't reload templates from the filesystem on every request. Twig caches compiled templates in memory. Disable caching in development so changes show immediately:
+
+```php
+$twig = new Environment($loader, [
+    'cache' => false, // Development
+]);
 ```
 
-## Step 7: Test Your Application
+In production, enable caching so templates compile once:
+
+```php
+$twig = new Environment($loader, [
+    'cache' => __DIR__ . '/../cache/twig', // Production
+]);
+```
+
+## Test Your Application
 
 ```bash
 php public/index.php
 ```
 
-Visit `http://localhost:8080` to see your beautifully styled blog homepage with Twig-rendered templates!
+Visit `http://localhost:8080` to see your HTML rendered by Twig.
 
 ## Understanding the event-loop model
 
