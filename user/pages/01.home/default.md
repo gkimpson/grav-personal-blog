@@ -6,7 +6,7 @@ title: Gavin Kimpson
 
 Software Engineer
 
-I build web applications with PHP, JavaScript, and modern frameworks.
+I build web applications with PHP, JavaScript, and modern frameworks. Arsenal supporter. #COYG
 
 ## Latest posts
 
