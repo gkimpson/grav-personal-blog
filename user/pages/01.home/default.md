@@ -10,6 +10,6 @@ I build web applications with PHP, JavaScript, and modern frameworks. Arsenal su
 
 ## Latest posts
 
-* [Getting Started with Framework-X and Twig Templates](/blog/framework-x-setup-with-twig) — June 28, 2026
+* [Getting Started with Framework-X and Twig Templates](/blog/framework-x-setup-with-twig) - June 28, 2026
 
-[View all posts →](/blog)
+[View all posts](/blog)
